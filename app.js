@@ -1,17 +1,18 @@
 /**
  * app.js
+ * Метеостанция ELSNER (RS485) присылает сообщение раз в 1 сек
+ * Данный плагин работает при подключении RS485 через MOXA на UDP порт
+ * Структура сообщения - 60 байт ASCII (0-59) + 1 байт=0x03 - конец сообщения:
+ * G+15.1060304N99902.6N20310231221531221.2+19.7O030.2N59.32937
+ * 
+ * байты 56-59 содержат CRC 
  */
 
-const util = require('util');
+// const util = require('util');
 
 const dgram = require('dgram');
 
 module.exports = async function(plugin) {
- /*
-  const testmsg = 'G+15.1060304N99902.6N20310231221531221.2+19.7O030.2N59.32937';
-  const testdata = parseMessage(testmsg);
-  if (testdata) plugin.sendData(testdata);
- */
   const socket = dgram.createSocket('udp4');
   let address;
   let fullMsg = '';
@@ -43,7 +44,7 @@ module.exports = async function(plugin) {
       }
     }
 
-    if (finish || fullMsg.length >= 60) {
+    if (finish || fullMsg.length >= 61) {
       plugin.log(`fullMsg = ${fullMsg}`, 1);
       const data = parseMessage(fullMsg);
       fullMsg = '';
@@ -63,7 +64,6 @@ module.exports = async function(plugin) {
   });
 
   function activateTimeout() {
-    
     timeoutInterval = setTimeout(() => {
       plugin.log('Timeout error');
       process.exit(1);
@@ -103,12 +103,12 @@ module.exports = async function(plugin) {
       for (let i=56; i<60; i++) {
         getCrc = getCrc*10+(mes.charCodeAt(i)-48);
       }
-      // plugin.log('getCrc='+getCrc)
+      
       let calcCrc = 0;
       for (let i=0; i<56; i++) {
         calcCrc += mes.charCodeAt(i);
       }
-      // plugin.log('calcCrc='+calcCrc)
+      
       if (getCrc == calcCrc) return true;
       plugin.log('Invalid CRC! Expected:'+calcCrc+', received: '+getCrc)
     }
