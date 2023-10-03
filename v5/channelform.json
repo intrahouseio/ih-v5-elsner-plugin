@@ -8,14 +8,11 @@
   "spacing": 4,
 
   "p1": [
-    { "prop": "chan", "title": "Channel ID", "type": "text" },
-    { "prop": "desc", "title": "$Type", "type": "text" },
-    { "prop": "test", "title": "XXXTest", "type": "number" }
+    { "prop": "chan", "title": "Channel ID", "type": "text" }
   ],
 
   "prw": [
-    { "prop": "r", "title": "$Read", "type": "cb" },
-    { "prop": "w", "title": "$Write", "type": "cb" }
+    { "prop": "r", "title": "$Read", "type": "cb" }
   ],
   "p9": [
     { "prop": "realtime_chan_str", "title": "Канал", "type": "text" },
