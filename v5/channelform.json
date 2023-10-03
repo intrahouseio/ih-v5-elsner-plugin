@@ -1,0 +1,24 @@
+{
+  "grid": [
+    { "id": "p1", "xs": 4, "class": "main", "table": "devhard" },
+    { "id": "prw", "xs": 2, "class": "main", "table": "devhard" },
+    { "id": "p9", "xs": 6, "class": "main", "table": "onechannelrtTable", "hide": "!data.prw.r" }
+
+  ],
+  "spacing": 4,
+
+  "p1": [
+    { "prop": "chan", "title": "Channel ID", "type": "text" },
+    { "prop": "desc", "title": "$Type", "type": "text" },
+    { "prop": "test", "title": "XXXTest", "type": "number" }
+  ],
+
+  "prw": [
+    { "prop": "r", "title": "$Read", "type": "cb" },
+    { "prop": "w", "title": "$Write", "type": "cb" }
+  ],
+  "p9": [
+    { "prop": "realtime_chan_str", "title": "Канал", "type": "text" },
+    { "prop": "realtime_dev_str", "title": "Устройство", "type": "text" }
+  ]
+}
